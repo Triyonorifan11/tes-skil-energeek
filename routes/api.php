@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CandidatesController;
+use App\Http\Controllers\JobsController;
+use App\Http\Controllers\SkillsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/candidate/store', [CandidatesController::class, 'store']);
+Route::get('/get-jabatan', [JobsController::class, 'index']);
+Route::get('/get-skill', [SkillsController::class, 'index']);
+Route::get('/get-tahun', [JobsController::class, 'year']);

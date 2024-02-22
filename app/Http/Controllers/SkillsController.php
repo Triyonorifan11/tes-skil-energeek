@@ -13,7 +13,9 @@ class SkillsController extends Controller
      */
     public function index()
     {
-        //
+        $data = skills::all();
+        $data->makeHidden(['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by']);
+        return responseApi(OK, false, 'Jabatan', $data);
     }
 
     /**

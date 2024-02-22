@@ -13,7 +13,17 @@ class JobsController extends Controller
      */
     public function index()
     {
-        //
+        $data = jobs::all();
+        $data->makeHidden(['created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by']);
+        return responseApi(OK, false, 'Jabatan', $data);
+    }
+
+    public function year(){
+        $startYear = 1945;
+        $endYear = date('Y');
+        $yearsRange = range($startYear, $endYear);
+        $yearsRange = array_reverse($yearsRange);
+        return responseApi(OK, false, 'year', $yearsRange);
     }
 
     /**
