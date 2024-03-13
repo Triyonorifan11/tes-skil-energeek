@@ -21,7 +21,7 @@ define('BAD_GATEWAY', 502);
 define('SERVICE_UNAVAILABLE', 503);
 define('GATEWAY_TIMEOUT', 504);
 
-function responseApi($status, $isWarning=false,$message, $data = null)
+function responseApi($status, $isWarning,$message, $data = null)
 {
     $response = [
         'status' => $status,

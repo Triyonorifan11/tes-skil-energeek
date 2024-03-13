@@ -28,8 +28,7 @@ class StartCommand extends Command
         //
         $this->info('Migrating database if not migrated yet');
         $this->call('migrate');
-        $this->info('Starting application');
-        $this->info('🔥🔥🔥🔥🔥🔥🔥🔥🔥');
+        $this->info('🔥🔥🔥🔥 Starting application 🔥🔥🔥🔥🔥');
         // check production
         if (env('APP_ENV') == 'production') {
             // optimize stuff

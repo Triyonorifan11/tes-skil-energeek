@@ -1,18 +1,39 @@
-# E-Cashier
+# Tes Skill Energeek
 
 ## Description
-This is psikotes project for junior fullstack developer in Energeek. It is built using Laravel 10
+Repository ini adalah Tes Energeek!
 
 ## Installation
-1. Clone this repository to your local machine `git clone https://github.com/Triyonorifan11/tes-skil-energeek.git`
-2. Run `composer install`
-3. run `cp .env.example .env`
-4. setup your env for database setting
-5. Run `php artisan app:init`
+1. Clone this repository to your local machine 
+```sh
+git clone https://github.com/Triyonorifan11/tes-skil-energeek
+```
+2. Run in terminal 
+```sh 
+cp env.example .env
+```
+3. Configure your .env file for connect databases
+4. Run in terminal 
+```sh 
+composer instal
+```
+5. Run 
+```sh
+php artisan app:init
+```
 
 ## Usage
-1. Run `php artisan start`
+1. Run 
+```sh
+php artisan start
+```
+
+## Login
+use this server application with 
+username : admin@admin.com
+password : password
+
 
 ## Architecture
-For logic all in the service layer, and controller only for request and response.
+Arsitektur by Energeek (Repository Pattern)
 
