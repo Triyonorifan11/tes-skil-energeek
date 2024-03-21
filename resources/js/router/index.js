@@ -19,6 +19,14 @@ import AdminMasterJobs from '@/admin/content/view/master/jobs/index.vue';
 
 let routes = [
     {
+        path: '/',
+        name: 'home',
+        component: Admin,
+        meta: {
+            title: 'Home page',
+        }
+    },
+    {
         path: '/admin',
         name: 'admin',
         component: Admin,
