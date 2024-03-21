@@ -35,8 +35,9 @@ Route::group(['middleware' => 'auth:sanctum'],function (){
             Route::put('/{id}', [JobsController::class, 'update']);
             Route::delete('/{id}', [JobsController::class, 'destroy']);
         });
-
-
+    });
+    Route::group(['prefix'=>'candidate'], function (){
+        Route::get('/', [CandidatesController::class, 'get_all_candidate']);
     });
 });
 

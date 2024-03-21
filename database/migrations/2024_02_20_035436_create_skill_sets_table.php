@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('candidate_id')->constrained('candidates');
             $table->foreignId('skill_id')->constrained('skills');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

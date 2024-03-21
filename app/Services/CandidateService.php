@@ -18,6 +18,7 @@ class CandidateService
         $candidates->email = $data['email'];
         $candidates->phone = $data['phone'];
         $candidates->year = $data['year'];
+        $candidates->status = 'Dilamar';
         $candidates->created_by = $candidates->id;
         $candidates->updated_by = null;
         $candidates->deleted_by = null;

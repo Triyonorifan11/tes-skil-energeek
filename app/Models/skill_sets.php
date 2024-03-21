@@ -14,4 +14,12 @@ class skill_sets extends Model
     HasFactory, 
     Notifiable, 
     SoftDeletes;
+
+    public function candidates(){
+        return $this->belongsTo(candidates::class, 'candidate_id', 'id');
+    }
+
+    public function skills(){
+        return $this->belongsTo(skills::class, 'skill_id', 'id');
+    }
 }

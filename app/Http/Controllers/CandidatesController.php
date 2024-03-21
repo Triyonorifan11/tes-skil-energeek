@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseFormatter;
 use App\Models\candidates;
 use App\Http\Requests\StorecandidatesRequest;
 use App\Http\Requests\UpdatecandidatesRequest;
+use App\Interfaces\CandidateInterface;
 use App\Models\jobs;
 use App\Models\skill_sets;
 use App\Models\skills;
 use App\Services\CandidateService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +21,14 @@ class CandidatesController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private $candidateInterface;
+
+    public function __construct(CandidateInterface $candidateInterface)
+    {
+        $this->candidateInterface = $candidateInterface;
+    }
+
     public function index()
     {
         $startYear = 1945;
@@ -31,6 +42,48 @@ class CandidatesController extends Controller
             'years' => $yearsRange,
         ];
         return view('apply', $data);
+    }
+
+    public function get_all_candidate(Request $request)
+    {
+        $jobs = $this->candidateInterface->getAll(
+            select: [
+                'id',
+                'name',
+                'job_id',
+                'email',
+                'phone',
+                'status',
+                'year',
+                'created_at',
+                'updated_at',
+                'deleted_at'
+            ],
+            withRelations:['jobs:id,name', 'skill_sets.skills:id,name'],
+            search: function (Builder $query) use ($request) {
+                $query->where('name', 'ILIKE', "%{$request->search}%");
+                $query->orWhere('email', 'ILIKE', "%{$request->search}%");
+                $query->orWhere('phone', 'ILIKE', "%{$request->search}%");
+            },
+            sortOption: [
+                'orderCol' => $request->sort_by,
+                'orderDir' => $request->order_by
+            ],
+            paginateOption: [
+                'method' => 'paginate',
+                'length' => $request->limit,
+                'page' => $request->current_page
+            ],
+            reformat: function ($data) {
+                return $data->through(function ($item, $key) {
+                    $result = $item->toArray();
+                    $result['jobs'] = $result['jobs']['name'];
+                    return $result;
+                });
+            }
+        );
+
+        return ResponseFormatter::success($jobs, 'Data berhasil ditampilkan');
     }
 
     /**
@@ -58,9 +111,9 @@ class CandidatesController extends Controller
             return responseApi(422, false, 'error', $validator->errors());
         }
         $data = $request->all();
-       
 
-        
+
+
         try {
             CandidateService::store($data);
             return responseApi(OK, false, 'Berhasil Apply', $request->all());
