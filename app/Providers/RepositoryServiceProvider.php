@@ -20,6 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(Interfaces\UserInterface::class, Repositories\UserRepository::class);
         $this->app->bind(Interfaces\SkillInterface::class, Repositories\SkillRepository::class);
+        $this->app->bind(Interfaces\JobsInterface::class, Repositories\JobsRepository::class);
         // $this->app->bind(Interfaces\TourismCategoryInterface::class, Repositories\TourismCategoryRepository::class);
         // $this->app->bind(Interfaces\EventCategoryInterface::class, Repositories\EventCategoryRepository::class);
         // $this->app->bind(Interfaces\CulinaryCategoryInterface::class, Repositories\CulinaryCategoryRepository::class);

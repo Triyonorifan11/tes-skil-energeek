@@ -29,6 +29,14 @@ Route::group(['middleware' => 'auth:sanctum'],function (){
             Route::put('/{id}', [SkillsController::class, 'update']);
             Route::delete('/{id}', [SkillsController::class, 'destroy']);
         });
+        Route::group(['prefix'=> 'jobs'], function (){
+            Route::get('/', [JobsController::class, 'get_all_jobs']);
+            Route::post('/', [JobsController::class, 'store']);
+            Route::put('/{id}', [JobsController::class, 'update']);
+            Route::delete('/{id}', [JobsController::class, 'destroy']);
+        });
+
+
     });
 });
 

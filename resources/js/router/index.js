@@ -14,6 +14,7 @@ import AdminHome from '@/admin/content/view/home/Index.vue';
 
 // master
 import AdminMasterSkill from '@/admin/content/view/master/skill/index.vue';
+import AdminMasterJobs from '@/admin/content/view/master/jobs/index.vue';
 
 let routes = [
     {
@@ -49,7 +50,7 @@ let routes = [
                     {
                         path: 'master-jobs',
                         name: 'a-m-jobs',
-                        component: AdminHome,
+                        component: AdminMasterJobs,
                     },
                     {
                         path: 'master-skill',

@@ -14,4 +14,9 @@ class jobs extends Model
     HasFactory, 
     Notifiable, 
     SoftDeletes;
+
+    public function candidates(){
+        return $this->belongsTo(candidates::class, 'job_id', 'id');
+    }
+
 }

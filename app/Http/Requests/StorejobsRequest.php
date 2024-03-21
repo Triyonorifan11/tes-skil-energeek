@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorejobsRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StorejobsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +23,22 @@ class StorejobsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'Required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Masukkan nama job.'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name'=> 'Nama'
+        ];
+    }
+    
 }
