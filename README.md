@@ -15,7 +15,8 @@ cp env.example .env
 3. Configure your .env file for connect databases
 4. Run in terminal 
 ```sh 
-composer instal
+composer install
+npm install
 ```
 5. Run 
 ```sh
