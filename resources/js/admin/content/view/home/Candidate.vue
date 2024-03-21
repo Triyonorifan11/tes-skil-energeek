@@ -22,7 +22,7 @@
                                                 <div
                                                     class="d-flex flex-column justify-content-center align-items-center">
                                                     {{ index + 1 + ((tableConfig?.config?.currentPage - 1) *
-                                        tableConfig?.config?.limit) }}
+                                    tableConfig?.config?.limit) }}
                                                 </div>
                                             </td>
                                             <td valign="middle">
@@ -32,13 +32,18 @@
                                                 <b>{{ context?.jobs }}</b>
                                             </td>
                                             <td valign="middle">
+                                                <span class="p-2 text-white bg-danger" v-if="(context.status == 'Ditolak')"><b>{{ context?.status }}</b></span>
+                                                <span class="p-2 text-white bg-success" v-if="(context.status == 'Diterima')"><b>{{ context?.status }}</b></span>
+                                                <span class="p-2 text-white bg-primary" v-if="(context.status == 'Dilamar')"><b>{{ context?.status }}</b></span>
+                                            </td>
+                                            <td valign="middle">
                                                 <b>{{ formatDate(context.createdAt) }}</b>
                                             </td>
 
                                             <td valign="middle" class="text-center">
                                                 <button class="btn btn-secondary btn-sm" title="edit"
                                                     @click="edit(context)"><i class="bi bi-pen"></i></button>
-                                            
+
                                             </td>
                                         </tr>
                                     </template>
@@ -58,8 +63,8 @@
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <h2 class="modal-title text-gray-700">{{ form.isEdit ? 'Edit' : 'Tambah' }} Skill</h2>
                                 <span class="text-muted">Silahkan lengkapi form berikut untuk {{ form.isEdit ?
-                                        'mengubah' :
-                                        'menambahkan' }} data.</span>
+                                    'mengubah' :
+                                    'menambahkan' }} data.</span>
                             </div>
                         </div>
                         <!--begin::Close-->
@@ -68,9 +73,10 @@
                     </div>
 
                     <div class="modal-body">
-                        <label for="name">Nama Skill</label>
-                        <input v-model="form.data.name" type="text" id="name" class="form-control"
-                            placeholder="Contoh: PHP Laravel">
+                        <label for="status">Status Kandidat</label>
+                        <app-select2 id="status" v-model="form.data.status" :loading="selectList.status.loading"
+                            :options="selectList?.status?.list" @get-options="getstatus" placeholder="Pilih Status"
+                            :multiple="false"></app-select2>
                         <br>
                     </div>
                     <div class="modal-footer d-flex justify-content-center align-items-center">
@@ -91,7 +97,22 @@ export default {
     data() {
         return {
             token: localStorage.getItem('token'),
-            selectList: {},
+            selectList: {
+                status: {
+                    loading: false,
+                    list: [
+                        {
+                            id:'Dilamar',text: 'Dilamar'
+                        },
+                        {
+                            id:'Diterima',text: 'Diterima'
+                        },
+                        {
+                            id:'Ditolak',text: 'Ditolak'
+                        }
+                    ]
+                },
+            },
             tableConfig: {
                 data: {
                     header: [
@@ -128,6 +149,21 @@ export default {
                         {
                             text: 'posisi',
                             sortBy: 'jobs',
+                            sort: true,
+                            class: {
+                                column: '',
+                                wrap: '',
+                                text: ''
+                            },
+                            style: {
+                                column: '',
+                                wrap: '',
+                                text: '',
+                            }
+                        },
+                        {
+                            text: 'Status lamar',
+                            sortBy: 'status',
                             sort: true,
                             class: {
                                 column: '',
@@ -188,7 +224,11 @@ export default {
                 isEdit: false,
                 idEdit: '',
                 data: {
-                    name: ''
+                    name: '',
+                    jobId: '',
+                    email: '',
+                    phone: '',
+                    status: '',
                 }
             }
         }
@@ -243,13 +283,14 @@ export default {
             this.form.isEdit = true;
             this.form.idEdit = data?.id;
             this.form.data.name = data?.name;
+            this.form.data.status = data?.status.text;
             $(`#modal-form`).modal('show');
         },
         simpan() {
             let that = this;
 
             this.$ewpLoadingShow();
-            this.$axios().post(`master/jobs`, this?.form?.data)
+            this.$axios().post(`candidate`, this?.form?.data)
                 .then(res => {
                     $(`.modal`).modal('hide');
                     Swal.fire('Berhasil', 'Data berhasil disimpan.', 'success');
@@ -264,9 +305,11 @@ export default {
         },
         update() {
             let that = this;
-
+            const data = {
+                status: this?.form?.data?.status.text
+            }
             this.$ewpLoadingShow();
-            this.$axios().put(`master/jobs/${this?.form?.idEdit}`, this?.form?.data)
+            this.$axios().put(`candidate/${this?.form?.idEdit}`, data)
                 .then(res => {
                     $(`.modal`).modal('hide');
                     Swal.fire('Berhasil', 'Data berhasil disimpan', 'success');
@@ -279,7 +322,7 @@ export default {
                     this.$ewpLoadingHide();
                 });
         },
-        
+
 
         async questionSwal(title, icon, text) {
             const swal = await Swal.fire({

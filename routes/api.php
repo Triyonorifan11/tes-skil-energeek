@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:sanctum'],function (){
     });
     Route::group(['prefix'=>'candidate'], function (){
         Route::get('/', [CandidatesController::class, 'get_all_candidate']);
+        Route::put('/{id}', [CandidatesController::class, 'update_status']);
     });
 });
 

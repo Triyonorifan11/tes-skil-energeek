@@ -6,6 +6,7 @@ use App\Helpers\ResponseFormatter;
 use App\Models\candidates;
 use App\Http\Requests\StorecandidatesRequest;
 use App\Http\Requests\UpdatecandidatesRequest;
+use App\Http\Resources\CandidateResource;
 use App\Interfaces\CandidateInterface;
 use App\Models\jobs;
 use App\Models\skill_sets;
@@ -144,6 +145,23 @@ class CandidatesController extends Controller
     public function update(UpdatecandidatesRequest $request, candidates $candidates)
     {
         //
+    }
+
+    public function update_status(Request $request, $id){
+        DB::beginTransaction();
+
+        $candidate = $this->candidateInterface->updateById(
+            id: $id,
+            data: $request->all()
+        );
+
+        DB::commit();
+        return (new CandidateResource($candidate))->additional([
+            'status' => [
+                'code' => 200,
+                'message' => 'Data berhasil disimpan'
+            ]
+        ])->response()->setStatusCode(200);
     }
 
     /**
