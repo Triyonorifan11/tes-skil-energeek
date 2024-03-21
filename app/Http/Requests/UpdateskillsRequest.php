@@ -23,7 +23,21 @@ class UpdateskillsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'Required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Masukkan nama skill.'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Nama'
         ];
     }
 }

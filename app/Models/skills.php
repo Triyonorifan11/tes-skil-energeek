@@ -15,4 +15,8 @@ class skills extends Model
     Notifiable, 
     SoftDeletes;
     
+    public function skill_sets(){
+        return $this->belongsTo(skill_sets::class, 'skill_id', 'id');
+    }
+
 }

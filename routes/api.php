@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\CandidatesController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\SkillsController;
@@ -17,9 +18,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum'],function (){
+    Route::group(['prefix' => 'auth'], function(){
+        Route::post('/me', [AuthenticationController::class, 'me']);
+    });
+    Route::group(['prefix'=> 'master'], function (){
+        Route::group(['prefix'=> 'skill'], function (){
+            Route::get('/', [SkillsController::class, 'get_all_skill']);
+            Route::post('/', [SkillsController::class, 'store']);
+            Route::put('/{id}', [SkillsController::class, 'update']);
+            Route::delete('/{id}', [SkillsController::class, 'destroy']);
+        });
+        Route::group(['prefix'=> 'jobs'], function (){
+            Route::get('/', [JobsController::class, 'get_all_jobs']);
+            Route::post('/', [JobsController::class, 'store']);
+            Route::put('/{id}', [JobsController::class, 'update']);
+            Route::delete('/{id}', [JobsController::class, 'destroy']);
+        });
+
+
+    });
 });
+
+Route::post('/auth/login', [AuthenticationController::class, 'login']);
 
 Route::post('/candidate/store', [CandidatesController::class, 'store']);
 Route::get('/get-jabatan', [JobsController::class, 'index']);

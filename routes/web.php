@@ -13,9 +13,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+$subpath_domain = config('myconfig.SUBPATH_DOMAIN');
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::resource('/', CandidatesController::class);
+Route::resource('/apply', CandidatesController::class);
+
+Route::any('{all}', function () {
+    if(str_contains(Request::url(),'admin')){
+        return view('admin');  
+    }else{
+        return view('welcome');  
+    }        
+})->where('all', '^(?!api).*$');
