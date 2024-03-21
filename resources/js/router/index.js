@@ -11,12 +11,21 @@ import AdminLogin from '@/admin/login/Index.vue';
 import AdminContent from '@/admin/content/Index.vue';
 
 import AdminHome from '@/admin/content/view/home/Index.vue';
+import AdminCandidate from '@/admin/content/view/home/Candidate.vue';
 
 // master
 import AdminMasterSkill from '@/admin/content/view/master/skill/index.vue';
 import AdminMasterJobs from '@/admin/content/view/master/jobs/index.vue';
 
 let routes = [
+    {
+        path: '/',
+        name: 'home',
+        component: Admin,
+        meta: {
+            title: 'Home page',
+        }
+    },
     {
         path: '/admin',
         name: 'admin',
@@ -45,7 +54,7 @@ let routes = [
                     {
                         path: 'home',
                         name: 'a-home',
-                        component: AdminHome,
+                        component: AdminCandidate,
                     },
                     {
                         path: 'master-jobs',

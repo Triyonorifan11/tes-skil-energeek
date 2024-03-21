@@ -1,11 +1,11 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "DINKES JATIM - ETIBI API",
-        "description": "Dokumentasi API Web dan Mobile untuk aplikasi DINKES JATIM - ETIBI",
+        "title": "Tes Skill",
+        "description": "Dokumentasi API  aplikasi TES SKILL ENERGEEK",
         "contact": {
-            "name": "Energeek",
-            "email": "energeekmail@gmail.com"
+            "name": "Riyo",
+            "email": "riyo@gmail.com"
         },
         "version": "1.0"
     },
