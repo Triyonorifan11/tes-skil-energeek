@@ -30,8 +30,8 @@ php artisan start
 
 ## Login
 use this server application with 
-username : admin@admin.com
-password : password
+username : admin@gmail.com;
+password : admin
 
 
 ## Architecture
