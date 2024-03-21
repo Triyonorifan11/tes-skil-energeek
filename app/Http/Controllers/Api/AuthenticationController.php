@@ -94,8 +94,7 @@ class AuthenticationController extends Controller
     public function me()
     {
         $userAuth = $this->userInterface->findById(
-            id: auth()->user()->id,
-            withRelations: ['role']
+            id: auth()->user()->id
         );
 
         return (new UserResource($userAuth))->additional([

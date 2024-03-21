@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default (isFormData = false) => {
-    const _token = localStorage.getItem('tourism_token');
+    const _token = localStorage.getItem('token');
 
     let header = {
         Authorization: _token ? 'Bearer ' + _token : '',

@@ -88,7 +88,7 @@ export default {
                     let data = res?.data?.data;
                     localStorage.setItem('token', data?.auth?.accessToken);
                     this.$store.commit("setAuth", data?.me);
-                    this.$router.push({ name: 'a-destinasi' });
+                    this.$router.push({ name: 'a-home' });
                 })
                 .catch(err => {
                     grecaptcha.reset()

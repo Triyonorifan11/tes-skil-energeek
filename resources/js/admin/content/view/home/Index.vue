@@ -180,7 +180,7 @@
             }
         },
         mounted(){
-            this.getData();
+            // this.getData();
         },
         methods: {
             initDropzone(){

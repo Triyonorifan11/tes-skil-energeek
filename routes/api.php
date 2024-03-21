@@ -18,8 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function (){
-
+Route::group(['middleware' => 'auth:sanctum'],function (){
+    Route::group(['prefix' => 'auth'], function(){
+        Route::post('/me', [AuthenticationController::class, 'me']);
+    });
+    Route::group(['prefix'=> 'master'], function (){
+        Route::group(['prefix'=> 'skill'], function (){
+            Route::get('/', [SkillsController::class, 'get_all_skill']);
+            Route::post('/', [SkillsController::class, 'store']);
+            Route::put('/{id}', [SkillsController::class, 'update']);
+            Route::delete('/{id}', [SkillsController::class, 'destroy']);
+        });
+    });
 });
 
 Route::post('/auth/login', [AuthenticationController::class, 'login']);
