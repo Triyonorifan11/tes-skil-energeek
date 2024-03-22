@@ -16,6 +16,60 @@
         }
     ],
     "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Api|Auth"
+                ],
+                "summary": "Login",
+                "operationId": "ea5ccc344aa0403c9553f167ddb42f37",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "recaptcha": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Api|Auth"
+                ],
+                "summary": "Logout",
+                "operationId": "cc29df7081a7528f0971f0310367cd1f",
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
         "/api/auth/me": {
             "post": {
                 "tags": [
@@ -23,6 +77,441 @@
                 ],
                 "summary": "Auth me",
                 "operationId": "6330fd53da3d955a66259b6be4a50159",
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidate": {
+            "get": {
+                "tags": [
+                    "Api|Candidate"
+                ],
+                "summary": "Candidate get_all_candidate",
+                "operationId": "7f945a348a4104692f380922c7d5fa65",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidate/store": {
+            "post": {
+                "tags": [
+                    "Api|Candidate"
+                ],
+                "summary": "Candidate store",
+                "operationId": "14e044dd4964e1024cff33542e05b164",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "job_id",
+                                    "phone",
+                                    "email",
+                                    "year",
+                                    "skill"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "job_id": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "year": {
+                                        "type": "string"
+                                    },
+                                    "skill": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/candidate/{id}": {
+            "put": {
+                "tags": [
+                    "Api|Candidate"
+                ],
+                "summary": "Candidate update status",
+                "operationId": "7e04a95fd1f27e62673745c73a9585b3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/master/jobs": {
+            "get": {
+                "tags": [
+                    "Api|Master|Jobs"
+                ],
+                "summary": "Jobs get_all_jobs",
+                "operationId": "da9f53d8f5e9547c180d9a17c83aa54f",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Api|Master|Jobs"
+                ],
+                "summary": "Jobs store",
+                "operationId": "ab761271e7f6ebc0aae397eba6c548f5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/master/jobs/{id}": {
+            "put": {
+                "tags": [
+                    "Api|Master|Jobs"
+                ],
+                "summary": "Jobs update",
+                "operationId": "83c288b64d74808ceb460d40ead2807f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Api|Master|Jobs"
+                ],
+                "summary": "Jobs delete",
+                "operationId": "2534e7c61cd484e2fa8eb71381b66a58",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/master/skill": {
+            "get": {
+                "tags": [
+                    "Api|Master|Skill"
+                ],
+                "summary": "Skill get_all_skill",
+                "operationId": "20825e38aaf0d8dd6259d45bbc926c41",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Api|Master|Skill"
+                ],
+                "summary": "Skill store",
+                "operationId": "2a26d5a84752a9011b76fcecea01682f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            }
+        },
+        "/api/master/skill/{id}": {
+            "put": {
+                "tags": [
+                    "Api|Master|Skill"
+                ],
+                "summary": "Skill update",
+                "operationId": "772164cd791e8f7eda03ed11722fbe8a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "$ref": "#/components/responses/globalResponse"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Api|Master|Skill"
+                ],
+                "summary": "Skill delete",
+                "operationId": "130ef6c9e7fe3157817ac1cf979ca318",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "$ref": "#/components/responses/globalResponse"

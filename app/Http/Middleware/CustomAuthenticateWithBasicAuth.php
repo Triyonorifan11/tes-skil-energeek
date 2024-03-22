@@ -22,7 +22,7 @@ class CustomAuthenticateWithBasicAuth
         config(['session.expire_on_close' => true]);
 
         if (!$authGuard->check()) {
-            $authGuard->basic('username');
+            $authGuard->basic('name');
         }
 
         $roleAuth = $authGuard->user();

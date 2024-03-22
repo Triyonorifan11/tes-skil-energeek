@@ -45,6 +45,40 @@ class CandidatesController extends Controller
         return view('apply', $data);
     }
 
+    /**
+     * @OA\Get(
+     *   tags={"Api|Candidate"},
+     *   path="/api/candidate",
+     *   summary="Candidate get_all_candidate",
+     *   @OA\Parameter(
+     *     name="search",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Parameter(
+     *     name="sortBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="orderBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="currentPage",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
+
     public function get_all_candidate(Request $request)
     {
         $jobs = $this->candidateInterface->getAll(
@@ -96,7 +130,25 @@ class CandidatesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *   tags={"Api|Candidate"},
+     *   path="/api/candidate/store",
+     *   summary="Candidate store",
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name","job_id","phone", "email", "year", "skill"},
+     *       @OA\Property(property="name", type="string"),
+     *       @OA\Property(property="job_id", type="string"),
+     *       @OA\Property(property="phone", type="string"),
+     *       @OA\Property(property="email", type="string"),
+     *       @OA\Property(property="year", type="string"),
+     *       @OA\Property(property="skill", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
      */
     public function store(Request $request)
     {
@@ -147,6 +199,28 @@ class CandidatesController extends Controller
         //
     }
 
+    /**
+     * @OA\Put(
+     *   tags={"Api|Candidate"},
+     *   path="/api/candidate/{id}",
+     *   summary="Candidate update status",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"status"},
+     *       @OA\Property(property="status", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
     public function update_status(Request $request, $id){
         DB::beginTransaction();
 

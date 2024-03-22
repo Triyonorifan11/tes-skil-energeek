@@ -40,6 +40,40 @@ class JobsController extends Controller
         return responseApi(OK, false, 'year', $yearsRange);
     }
 
+     /**
+     * @OA\Get(
+     *   tags={"Api|Master|Jobs"},
+     *   path="/api/master/jobs",
+     *   summary="Jobs get_all_jobs",
+     *   @OA\Parameter(
+     *     name="search",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Parameter(
+     *     name="sortBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="orderBy",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(
+     *     name="currentPage",
+     *     in="query",
+     *     @OA\Schema(type="integer")
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
+
     public function get_all_jobs(Request $request)
     {
         $jobs = $this->jobsinterface->getAll(
@@ -81,12 +115,29 @@ class JobsController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
+     /**
+     * @OA\Post(
+     *   tags={"Api|Master|Jobs"},
+     *   path="/api/master/jobs",
+     *   summary="Jobs store",
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
      */
     public function store(StorejobsRequest $request)
     {
         DB::beginTransaction();
+        $request['created_by'] = auth()->user()->id;
+        $request['updated_by'] = auth()->user()->id;
+        $request['updated_at'] = now(config('app.timezone'));
+        $request['created_at'] = now(config('app.timezone'));
         $jobs = $this->jobsinterface->create(
             data: $request->all()
         );
@@ -117,12 +168,32 @@ class JobsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *   tags={"Api|Master|Jobs"},
+     *   path="/api/master/jobs/{id}",
+     *   summary="Jobs update",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string")
+     *     )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
      */
     public function update(UpdatejobsRequest $request, $id)
     {
         DB::beginTransaction();
-
+        $request['updated_by'] = auth()->user()->id;
+        $request['updated_at'] = now(config('app.timezone'));
         $jobs = $this->jobsinterface->updateById(
             id: $id,
             data: $request->all()
@@ -137,8 +208,19 @@ class JobsController extends Controller
         ])->response()->setStatusCode(200);
     }
 
-    /**
-     * Remove the specified resource from storage.
+        /**
+     * @OA\Delete(
+     *   tags={"Api|Master|Jobs"},
+     *   path="/api/master/jobs/{id}",
+     *   summary="Jobs delete",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
      */
     public function destroy($id)
     {
