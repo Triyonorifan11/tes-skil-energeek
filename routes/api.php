@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'],function (){
     Route::group(['prefix' => 'auth'], function(){
         Route::post('/me', [AuthenticationController::class, 'me']);
+        Route::post('/logout', [AuthenticationController::class, 'logout']);
     });
     Route::group(['prefix'=> 'master'], function (){
         Route::group(['prefix'=> 'skill'], function (){

@@ -29,6 +29,25 @@ class AuthenticationController extends Controller
         ];
     }
 
+     /**
+     * @OA\Post(
+     *   tags={"Api|Auth"},
+     *   path="/api/auth/login",
+     *   summary="Login",
+     *   @OA\RequestBody(
+     *     required=true,
+     *      @OA\JsonContent(
+     *       type="object",
+     *       required={"username", "password"},
+     *       @OA\Property(property="username", type="string"),
+     *       @OA\Property(property="password", type="string", format="password"),
+     *       @OA\Property(property="recaptcha", type="string"),
+     *      )
+     *   ),
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
+
     public function login(Request $request){
         $rules = [
             'username' => 'required',
@@ -72,6 +91,15 @@ class AuthenticationController extends Controller
 
         
     }
+
+     /**
+     * @OA\Post(
+     *   tags={"Api|Auth"},
+     *   path="/api/auth/logout",
+     *   summary="Logout",
+     *   @OA\Response(response="default", ref="#/components/responses/globalResponse")
+     * )
+     */
 
     public function logout()
     {
