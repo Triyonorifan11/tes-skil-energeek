@@ -28,9 +28,17 @@ php artisan app:init
 ```sh
 php artisan start
 ```
+Create Interface By Command
+```sh
+php artisan make:interface ContohInterface
+```
+Create Repository By Command
+```sh
+php artisan make:repository Contoh
+```
 
 ## Login
-use this server application with 
+use this application with 
 username : admin@gmail.com;
 password : admin
 
